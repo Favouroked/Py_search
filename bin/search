@@ -1,8 +1,20 @@
+#!/usr/bin/python3
+import os
+import sys
 from threading import Thread
 from queue import Queue
 import os
 
-SEARCH_NAME = 'fav'
+indicator = sys.argv[-2]
+
+if indicator == '-g':
+    SEARCH_PATH = os.path.expanduser('~')
+else:
+    SEARCH_PATH = os.getcwd()
+
+SEARCH_NAME = sys.argv[-1]
+
+print("The directory you are searching is: ", SEARCH_PATH)
 
 NUMBER_OF_THREADS = 5
 q = Queue(maxsize = 0)
@@ -26,6 +38,6 @@ for i in range(NUMBER_OF_THREADS):
     worker.setDaemon(True)
     worker.start()
 
-q.put('/home/favour')
+q.put(SEARCH_PATH)
 
 q.join()
